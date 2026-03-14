@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FitForge Planner | Персональный план питания и тренировок</title>
+  <meta name="description" content="Динамический фитнес-сайт: расчёт калорий, БЖУ, персональное питание на 7 дней и тренировки на 3 дня в неделю.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#start">
+        <span class="brand-mark">FF</span>
+        <span class="brand-text">FitForge Planner</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#planner">Планировщик</a>
+        <a href="#results">Результат</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="start">
+    <section class="hero container reveal">
+      <div class="hero-copy">
+        <p class="kicker">Персональный фитнес-план</p>
+        <h1>Введи параметры и получи план на 7 дней питания + 3 дня тренировок.</h1>
+        <p class="lead">
+          Сайт рассчитывает калории и БЖУ под твою цель: похудение, набор массы или поддержание формы.
+          В ответ ты получаешь готовый недельный план питания и тренировок.
+        </p>
+        <a class="btn" href="#planner">Составить мой план</a>
+      </div>
+      <figure class="hero-media">
+        <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Спортивный зал с гантелями и штангой">
+      </figure>
+    </section>
+
+    <section id="planner" class="section container reveal">
+      <div class="section-head">
+        <p class="kicker">Шаг 1</p>
+        <h2>Введи свои параметры</h2>
+      </div>
+
+      <form id="fitness-form" class="planner-form" novalidate>
+        <div class="field">
+          <label for="name">Имя</label>
+          <input id="name" name="name" type="text" placeholder="Например, Самир">
+        </div>
+
+        <div class="field">
+          <label for="sex">Пол</label>
+          <select id="sex" name="sex" required>
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="age">Возраст</label>
+          <input id="age" name="age" type="number" min="14" max="85" value="30" required>
+        </div>
+
+        <div class="field">
+          <label for="height">Рост (см)</label>
+          <input id="height" name="height" type="number" min="130" max="230" placeholder="180" required>
+        </div>
+
+        <div class="field">
+          <label for="weight">Текущий вес (кг)</label>
+          <input id="weight" name="weight" type="number" min="35" max="260" step="0.1" placeholder="120" required>
+        </div>
+
+        <div class="field">
+          <label for="targetWeight">Целевой вес (кг)</label>
+          <input id="targetWeight" name="targetWeight" type="number" min="35" max="260" step="0.1" placeholder="70" required>
+        </div>
+
+        <div class="field">
+          <label for="goal">Цель</label>
+          <select id="goal" name="goal" required>
+            <option value="lose">Похудение</option>
+            <option value="gain">Набор массы</option>
+            <option value="maintain">Поддержание формы</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="activity">Уровень активности</label>
+          <select id="activity" name="activity" required>
+            <option value="1.2">Низкий (сидячая работа)</option>
+            <option value="1.375">Лёгкий (1-2 тренировки в неделю)</option>
+            <option value="1.55" selected>Средний (3-4 тренировки в неделю)</option>
+            <option value="1.725">Высокий (5+ тренировок в неделю)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="trainingStyle">Формат тренировок</label>
+          <select id="trainingStyle" name="trainingStyle" required>
+            <option value="gym">Зал (штанги/тренажеры)</option>
+            <option value="home">Дом (гантели/резинки/вес тела)</option>
+            <option value="mixed">Смешанный</option>
+          </select>
+        </div>
+
+        <label class="checkbox">
+          <input id="preserveMuscle" name="preserveMuscle" type="checkbox" checked>
+          <span>Приоритет: сохранить мышцы</span>
+        </label>
+
+        <button class="btn" type="submit">Сгенерировать план</button>
+        <p id="form-error" class="error" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="results" class="section container reveal hidden" aria-live="polite">
+      <div class="section-head">
+        <p class="kicker">Шаг 2</p>
+        <h2>Твой персональный план</h2>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card">
+          <p class="label">Калории в день</p>
+          <p id="daily-calories" class="value">-</p>
+        </article>
+        <article class="summary-card">
+          <p class="label">Белки</p>
+          <p id="daily-protein" class="value">-</p>
+        </article>
+        <article class="summary-card">
+          <p class="label">Жиры</p>
+          <p id="daily-fat" class="value">-</p>
+        </article>
+        <article class="summary-card">
+          <p class="label">Углеводы</p>
+          <p id="daily-carbs" class="value">-</p>
+        </article>
+      </div>
+
+      <article class="timeline-box">
+        <h3>Прогноз до цели</h3>
+        <p id="timeline-text">-</p>
+      </article>
+
+      <article class="plan-block">
+        <h3>Питание на 7 дней</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>День</th>
+                <th>Ккал</th>
+                <th>Б</th>
+                <th>Ж</th>
+                <th>У</th>
+                <th>Меню</th>
+              </tr>
+            </thead>
+            <tbody id="nutrition-body"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="plan-block">
+        <h3>Тренировки 3 дня в неделю</h3>
+        <div id="workout-grid" class="workout-grid"></div>
+      </article>
+
+      <p class="disclaimer">
+        Важно: этот план носит информационный характер и не заменяет консультацию врача или спортивного диетолога.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>FitForge Planner</p>
+      <p>Твой динамический фитнес-сайт</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
